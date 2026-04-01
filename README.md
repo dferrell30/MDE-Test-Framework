@@ -8,3 +8,7 @@
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+
+## 📖 Full Documentation
+
+➡️ [Security Playbook](./docs/PLAYBOOK.md)
