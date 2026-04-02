@@ -18,7 +18,7 @@ For best results:
 - Choose Run as administrator
 - How to confirm version
 
-Run:
+### Run:
 
 $PSVersionTable.PSVersion
 
