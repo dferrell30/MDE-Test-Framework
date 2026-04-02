@@ -1,9 +1,11 @@
-📦 How to Install PowerShell
+# 📦 How to Install PowerShell
 Option 1: Use Windows PowerShell 5.1
 
 Most Windows systems already include Windows PowerShell 5.1.
 
-How to open it
+---
+
+## How to open it
 Click Start
 Type PowerShell
 Click Windows PowerShell
