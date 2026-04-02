@@ -35,6 +35,7 @@ Results Processing
         │
         ▼
 User Review (GUI / Files)
+```
 ---
 
 ## 🧠 Why This Exists
