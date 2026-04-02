@@ -151,22 +151,27 @@ Disconnect-MgGraph
 ## 🧪 Test Scenarios
 
 Defender Sensor
+---
 
 Checks whether the Sense service is running.
 
 AV Status
+---
 
 Checks whether Defender Antivirus and real-time protection are enabled.
 
 ASR Rules
+---
 
 Checks whether Attack Surface Reduction rules are configured.
 
 EICAR Test
+---
 
 Downloads the standard EICAR test file to confirm Defender detection behavior.
 
 EDR Simulation
+---
 
 Launches a benign encoded PowerShell process to create telemetry for validation.
 
