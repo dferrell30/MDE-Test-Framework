@@ -77,7 +77,7 @@ An app registration is not required for manual interactive use.
 
 ---
 
-### 🚀 How to Run the Application
+## 🚀 How to Run the Application
 
 Step 1: Open PowerShell
 
