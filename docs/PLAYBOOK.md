@@ -147,6 +147,7 @@ Disconnect-MgGraph
 
 ---
 
+
 ## 🧪 Test Scenarios
 
 Defender Sensor
@@ -174,6 +175,7 @@ Graph Module / Graph Connection / Alert Retrieval
 Confirms Graph module availability, sign-in status, and alert query capability.
 
 ---
+
 
 ##📊 Output and Reports
 
@@ -236,6 +238,7 @@ That can be normal in a lab environment.
 
 ---
 
+
 ## 📂 Project Structure
 
 MDE-Test-Framework/
@@ -249,7 +252,10 @@ MDE-Test-Framework/
 │   ├── results.html
 │   └── MDE-TestLog_*.log
 └── .gitignore
+
+
 ---
+
 
 ##✅ Quick Launch Summary
 
