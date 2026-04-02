@@ -1,20 +1,22 @@
 # 📦 How to Install PowerShell
+
 Option 1: Use Windows PowerShell 5.1
 
 Most Windows systems already include Windows PowerShell 5.1.
 
 ---
 
-## How to open it
-Click Start
-Type PowerShell
-Click Windows PowerShell
+### How to open it
+
+- Click Start
+- Type PowerShell
+- Click Windows PowerShell
 
 For best results:
 
-Right-click Windows PowerShell
-Choose Run as administrator
-How to confirm version
+- Right-click Windows PowerShell
+- Choose Run as administrator
+- How to confirm version
 
 Run:
 
@@ -40,9 +42,12 @@ PowerShell 7
 Then verify:
 
 $PSVersionTable.PSVersion
+
+---
+
 📁 Repository Setup
 
-After downloading or cloning the repository, your folder should look like this:
+### After downloading or cloning the repository, your folder should look like this:
 
 MDE-Test-Framework/
 ├── Invoke-MDEGui.ps1
@@ -54,7 +59,7 @@ MDE-Test-Framework/
 
 The logs folder can be empty. The framework will create output files automatically.
 
-🔐 Permissions
+### 🔐 Permissions
 Local permissions
 Permission	Needed
 Run PowerShell scripts	Yes
@@ -70,7 +75,10 @@ AuditLog.Read.All
 
 An app registration is not required for manual interactive use.
 
-🚀 How to Run the Application
+---
+
+### 🚀 How to Run the Application
+
 Step 1: Open PowerShell
 
 Open either:
@@ -103,6 +111,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 Then run:
 
 .\Invoke-MDEGui.ps1
+
 Step 4: If files were downloaded and blocked, unblock them
 
 Run:
@@ -113,9 +122,10 @@ Unblock-File .\MDETestFramework.psm1
 Then run the application:
 
 .\Invoke-MDEGui.ps1
+
 Step 5: Use the GUI
 
-Once the window opens:
+### Once the window opens:
 
 Click Connect Graph if you want cloud alert validation
 Select or clear:
@@ -134,7 +144,11 @@ Connect manually if needed
 Connect-MgGraph -Scopes "SecurityEvents.Read.All","Directory.Read.All","AuditLog.Read.All"
 Disconnect
 Disconnect-MgGraph
-🧪 Test Scenarios
+
+---
+
+## 🧪 Test Scenarios
+
 Defender Sensor
 
 Checks whether the Sense service is running.
@@ -159,7 +173,9 @@ Graph Module / Graph Connection / Alert Retrieval
 
 Confirms Graph module availability, sign-in status, and alert query capability.
 
-📊 Output and Reports
+---
+
+##📊 Output and Reports
 
 All outputs are written to:
 
@@ -218,7 +234,10 @@ This usually means no ASR rules are configured on the device.
 
 That can be normal in a lab environment.
 
-📂 Project Structure
+---
+
+## 📂 Project Structure
+
 MDE-Test-Framework/
 ├── Invoke-MDEGui.ps1
 ├── MDETestFramework.psm1
@@ -230,7 +249,9 @@ MDE-Test-Framework/
 │   ├── results.html
 │   └── MDE-TestLog_*.log
 └── .gitignore
-✅ Quick Launch Summary
+---
+
+##✅ Quick Launch Summary
 
 If you only need the fastest path:
 
