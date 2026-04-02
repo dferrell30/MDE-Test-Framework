@@ -4,6 +4,84 @@ A PowerShell-based GUI tool for validating and testing Microsoft Defender for En
 
 ---
 
+## 🧠 Why This Exists
+
+🛡️ **“Defender is deployed… we’re good.”**
+
+Are you though?
+
+In many environments:
+
+- Policies look correct  
+- Dashboards are green  
+- Coverage appears complete  
+
+But when tested:
+
+- EICAR may not be blocked  
+- ASR rules may not enforce  
+- Detection visibility may be inconsistent  
+
+👉 The reality:
+
+**Security controls often fail silently.**
+
+This framework was built to answer a simple but critical question:
+
+> **“Is Microsoft Defender actually working as expected?”**
+
+---
+
+## 🎯 What Problem This Solves
+
+Most organizations validate Defender by:
+
+- Reviewing configuration settings  
+- Checking compliance dashboards  
+- Assuming policy = enforcement  
+
+👉 But configuration ≠ protection
+
+This tool helps you:
+
+- Validate **actual enforcement**, not just settings  
+- Simulate **real detection scenarios safely**  
+- Identify gaps in:
+  - Antivirus protection  
+  - ASR rule enforcement  
+  - EDR visibility and telemetry  
+
+---
+
+## 🕒 When to Use This
+
+Use this framework when:
+
+- ✔ After onboarding a device to Defender  
+- ✔ After deploying or modifying policies (Intune / GPO)  
+- ✔ During security validation or audits  
+- ✔ When troubleshooting detection gaps  
+- ✔ In lab or controlled production validation scenarios  
+
+---
+
+## ✅ Expected Outcomes
+
+After running this tool, you should be able to:
+
+- Confirm Defender sensor and AV health  
+- Validate that ASR rules are actually enforced  
+- Verify malware simulation is detected (EICAR)  
+- Observe EDR telemetry generation  
+- Produce:
+  - JSON output (automation-ready)  
+  - HTML report (human-readable)  
+  - Execution logs  
+
+---
+
+---
+
 ## 📖 Full Documentation
 
 ➡️ [Security Playbook](./docs/PLAYBOOK.md)
