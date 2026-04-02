@@ -182,7 +182,7 @@ Confirms Graph module availability, sign-in status, and alert query capability.
 ---
 
 
-##📊 Output and Reports
+# 📊 Output and Reports
 
 All outputs are written to:
 
@@ -244,7 +244,7 @@ That can be normal in a lab environment.
 ---
 
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 MDE-Test-Framework/
 ├── Invoke-MDEGui.ps1
@@ -262,7 +262,7 @@ MDE-Test-Framework/
 ---
 
 
-##✅ Quick Launch Summary
+# ✅ Quick Launch Summary
 
 If you only need the fastest path:
 
