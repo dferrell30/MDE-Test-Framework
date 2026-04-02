@@ -101,4 +101,15 @@ This project follows a structured release format and semantic-style versioning.
 - Signed PowerShell modules
 - Expanded Defender coverage
 
+- ## [v1.1] - Release 0.2
+
+### ✨ Added
+- New feature...
+
+### 🔧 Changed
+- Updated...
+
+### 🐛 Fixed
+- Bug fix...
+
 ---
