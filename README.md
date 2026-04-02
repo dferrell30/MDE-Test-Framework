@@ -1,7 +1,9 @@
 # 🛡️ MDE Test Framework
 
 A PowerShell-based GUI tool for validating and testing Microsoft Defender for Endpoint (MDE) configurations and security controls.
+
 ---
+
 ## 🔄 How It Works
 ```text
 User Action (GUI)
@@ -84,12 +86,13 @@ There is no simple, repeatable way to **validate that Defender controls are acti
 
 This framework addresses that gap by enabling **safe, controlled testing of Defender capabilities**
 
-## 📖 Full Documentation
+# 📖 Full Documentation
 
 ➡️ [Security Playbook](./docs/PLAYBOOK.md)
+
 ---
 
-## ⚠️ Disclaimer
+# ⚠️ Disclaimer
 
 This tool is provided for **educational, testing, and security validation purposes only**.
 
@@ -108,8 +111,7 @@ By using this tool, you agree to use it in a lawful and responsible manner.
 This project is not affiliated with or endorsed by Microsoft.
 ---
 
-
-## ⚖️ Professional Disclaimer
+# ⚖️ Professional Disclaimer
 
 This project is an independent work developed in a personal capacity.
 
@@ -123,7 +125,7 @@ All code in this repository is provided under the terms of the included MIT Lice
 
 ---
 
-## 🚀 Quick Start
+# 🚀 Quick Start
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
