@@ -60,55 +60,6 @@ This framework addresses that gap by enabling **safe, controlled testing of Defe
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
-
-## 🎯 What Problem This Solves
-
-Most organizations validate Defender by:
-
-- Reviewing configuration settings  
-- Checking compliance dashboards  
-- Assuming policy = enforcement  
-
-👉 But configuration ≠ protection
-
-This tool helps you:
-
-- Validate **actual enforcement**, not just settings  
-- Simulate **real detection scenarios safely**  
-- Identify gaps in:
-  - Antivirus protection  
-  - ASR rule enforcement  
-  - EDR visibility and telemetry  
-
----
-
-## 🕒 When to Use This
-
-Use this framework when:
-
-- ✔ After onboarding a device to Defender  
-- ✔ After deploying or modifying policies (Intune / GPO)  
-- ✔ During security validation or audits  
-- ✔ When troubleshooting detection gaps  
-- ✔ In lab or controlled production validation scenarios  
-
----
-
-## ✅ Expected Outcomes
-
-After running this tool, you should be able to:
-
-- Confirm Defender sensor and AV health  
-- Validate that ASR rules are actually enforced  
-- Verify malware simulation is detected (EICAR)  
-- Observe EDR telemetry generation  
-- Produce:
-  - JSON output (automation-ready)  
-  - HTML report (human-readable)  
-  - Execution logs  
-
----
-
 ---
 
 ## 📖 Full Documentation
