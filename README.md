@@ -32,6 +32,35 @@ This framework was built to answer a simple but critical question:
 
 ---
 
+## 🚨 Problem Statement
+
+Many environments rely on Microsoft Defender for Endpoint and assume protection is working because:
+
+- Policies are configured  
+- Devices are onboarded  
+- Dashboards show healthy status  
+
+However:
+
+- Configuration does not guarantee enforcement  
+- Security controls can fail silently  
+- Detection visibility may not reflect real-world behavior  
+
+👉 The gap:
+
+There is no simple, repeatable way to **validate that Defender controls are actively protecting the endpoint**
+
+This framework addresses that gap by enabling **safe, controlled testing of Defender capabilities**
+
+---
+
+## 🚀 How to Use
+
+### Step 1 — Launch the Tool
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+
 ## 🎯 What Problem This Solves
 
 Most organizations validate Defender by:
