@@ -6,34 +6,34 @@ A PowerShell-based GUI tool for validating and testing Microsoft Defender for En
 
 ```text
 User Action (GUI)
-        │
-        ▼
+    │
+    ▼
 Invoke-MDEGui.ps1
-        │
-        ▼
+    │
+    ▼
 MDETestFramework.psm1 (Core Logic)
-        │
-        ├── Defender Checks
-        │     ├─ Sensor Health
-        │     ├─ AV Status
-        │     └─ ASR Rules
-        │
-        ├── Simulation Tests
-        │     ├─ EICAR Execution
-        │     └─ EDR Behavior Trigger
-        │
-        ├── Microsoft Graph (Optional)
-        │     ├─ Authentication
-        │     └─ Alert Retrieval
-        │
-        ▼
+    │
+    ├── Defender Checks
+    │   ├─ Sensor Health
+    │   ├─ AV Status
+    │   └─ ASR Rules
+    │
+    ├── Simulation Tests
+    │   ├─ EICAR Execution
+    │   └─ EDR Behavior Trigger
+    │
+    ├── Microsoft Graph (Optional)
+    │   ├─ Authentication
+    │   └─ Alert Retrieval
+    │
+    ▼
 Results Processing
-        │
-        ├─ JSON Output
-        ├─ HTML Report
-        └─ Log Files
-        │
-        ▼
+    │
+    ├─ JSON Output
+    ├─ HTML Report
+    └─ Log Files
+    │
+    ▼
 User Review (GUI / Files)
 ```
 ---
