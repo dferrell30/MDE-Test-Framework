@@ -108,9 +108,20 @@ By using this tool, you agree to use it in a lawful and responsible manner.
 This project is not affiliated with or endorsed by Microsoft.
 ---
 
+
 ## ⚖️ Professional Disclaimer
 
-The views and opinions expressed in this project are my own and do not reflect the official policy or position of my employer or any affiliated organization.
+This project is an independent work developed in a personal capacity.
+
+The views, opinions, code, and content expressed in this repository are solely my own and do not reflect the views, policies, or positions of any current or future employer, client, or affiliated organization.
+
+No employer, past, present, or future, has reviewed, approved, endorsed, or is in any way associated with this work.
+
+This project was developed outside the scope of any employment and without the use of proprietary, confidential, or restricted resources.
+
+All code in this repository is provided under the terms of the included MIT License.
+
+---
 
 ## 🚀 Quick Start
 
