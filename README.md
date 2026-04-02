@@ -4,6 +4,7 @@ A PowerShell-based GUI tool for validating and testing Microsoft Defender for En
 ---
 ## 🔄 How It Works
 
+```text
 User Action (GUI)
         │
         ▼
