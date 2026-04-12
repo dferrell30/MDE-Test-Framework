@@ -107,18 +107,27 @@ This project follows a structured release format and semantic-style versioning.
 - README.md created
 - LICENSE added
 - docs/PLAYBOOK.md added
-- - Expected outcome mapping for validation tests
+- Expected outcome mapping for validation tests
 - Analyst guidance fields (Expected Behavior, Telemetry, Alert Expectation, Verification)
 - Enhanced HTML report with validation context
 - Structured test metadata mapping
+- Per-test metadata for category, expected behavior, expected telemetry, alert expectation, and verification guidance
+- Executive summary section in the HTML report
+- Category-based result grouping in the HTML report
+- HTML encoding for safer rendering of report content
 
 ### 🔧 Changed
 - Initial repository structure prepared
 - Improved HTML report readability and structure
 - Standardized test naming and output format
 - Refined validation messaging for AV, EDR, ASR, and Graph tests
+- Renamed "ASR Rules" output to "ASR Configuration" to better reflect configuration-only validation
+- Upgraded HTML report to include analyst guidance and validation context
+- Updated report title and footer to align with the Validation Framework naming
 
 ### 🐛 Fixed
 - Report export sequencing issue (ensures complete results are captured)
+- Corrected export sequencing so JSON and HTML are generated after the test run is complete
+- Improved report consistency by removing export actions as test results
 
 ---
