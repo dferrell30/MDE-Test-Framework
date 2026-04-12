@@ -6,6 +6,65 @@ $script:BasePath = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Pa
 $script:LogDir = Join-Path $script:BasePath 'logs'
 $script:LogFile = $null
 
+$script:TestMetadata = @{
+    'Defender Sensor' = @{
+        Category          = 'Platform Health'
+        ExpectedBehavior  = 'Microsoft Defender for Endpoint sensor service should be running.'
+        ExpectedTelemetry = 'Endpoint sensor state available locally.'
+        AlertExpectation  = 'No alert expected.'
+        Verify            = 'Local service status / Defender portal device health'
+    }
+    'AV Status' = @{
+        Category          = 'Platform Health'
+        ExpectedBehavior  = 'Realtime protection and antivirus should be enabled.'
+        ExpectedTelemetry = 'Local Defender AV health state available.'
+        AlertExpectation  = 'No alert expected.'
+        Verify            = 'Get-MpComputerStatus / Defender portal'
+    }
+    'ASR Configuration' = @{
+        Category          = 'Prevention Validation'
+        ExpectedBehavior  = 'ASR rules should be present and configured.'
+        ExpectedTelemetry = 'Configuration visible on endpoint.'
+        AlertExpectation  = 'No alert expected (configuration validation only).'
+        Verify            = 'Get-MpPreference / Intune / Defender portal'
+    }
+    'EICAR Test' = @{
+        Category          = 'Prevention Validation'
+        ExpectedBehavior  = 'EICAR test file should be blocked, quarantined, or removed by Defender AV.'
+        ExpectedTelemetry = 'Malware detection event should be logged.'
+        AlertExpectation  = 'Alert may be generated depending on policy and environment tuning.'
+        Verify            = 'Defender portal device timeline / Incidents & alerts'
+    }
+    'EDR Simulation' = @{
+        Category          = 'Detection & Telemetry'
+        ExpectedBehavior  = 'Benign encoded PowerShell should execute successfully in most environments.'
+        ExpectedTelemetry = 'Process creation and command-line activity should be visible.'
+        AlertExpectation  = 'Environment dependent; may or may not generate an alert.'
+        Verify            = 'Device timeline / Advanced Hunting'
+    }
+    'Graph Module' = @{
+        Category          = 'Cloud Visibility'
+        ExpectedBehavior  = 'Microsoft Graph PowerShell module should be installed for cloud validation.'
+        ExpectedTelemetry = 'Local module availability can be confirmed.'
+        AlertExpectation  = 'No alert expected.'
+        Verify            = 'Get-Module -ListAvailable'
+    }
+    'Graph Connection' = @{
+        Category          = 'Cloud Visibility'
+        ExpectedBehavior  = 'An active Graph connection should be present when cloud validation is used.'
+        ExpectedTelemetry = 'Graph context should show authenticated account details.'
+        AlertExpectation  = 'No alert expected.'
+        Verify            = 'Get-MgContext'
+    }
+    'Alert Retrieval' = @{
+        Category          = 'Cloud Visibility'
+        ExpectedBehavior  = 'Recent alerts should be retrievable through Microsoft Graph if accessible.'
+        ExpectedTelemetry = 'Alert metadata should be returned from the Graph API.'
+        AlertExpectation  = 'Existing alerts should be visible if present.'
+        Verify            = 'Defender portal / Microsoft Graph API'
+    }
+}
+
 function Initialize-MDEFramework {
     if (-not (Test-Path -LiteralPath $script:LogDir)) {
         New-Item -ItemType Directory -Path $script:LogDir -Force | Out-Null
@@ -32,6 +91,25 @@ function Write-Log {
     Add-Content -Path $script:LogFile -Value $line
 }
 
+function Get-TestMetadata {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name
+    )
+
+    if ($script:TestMetadata.ContainsKey($Name)) {
+        return $script:TestMetadata[$Name]
+    }
+
+    return @{
+        Category          = 'General'
+        ExpectedBehavior  = 'Review test details.'
+        ExpectedTelemetry = 'Review test details.'
+        AlertExpectation  = 'Review test details.'
+        Verify            = 'Review test details.'
+    }
+}
+
 function Add-Result {
     param(
         [Parameter(Mandatory)]
@@ -44,11 +122,18 @@ function Add-Result {
         [string]$Details
     )
 
+    $meta = Get-TestMetadata -Name $Name
+
     $item = [PSCustomObject]@{
-        TestName = $Name
-        Status   = $Status
-        Details  = $Details
-        Time     = Get-Date
+        TestName          = $Name
+        Category          = [string]$meta.Category
+        Status            = $Status
+        Details           = $Details
+        ExpectedBehavior  = [string]$meta.ExpectedBehavior
+        ExpectedTelemetry = [string]$meta.ExpectedTelemetry
+        AlertExpectation  = [string]$meta.AlertExpectation
+        Verify            = [string]$meta.Verify
+        Time              = Get-Date
     }
 
     $script:Results += $item
@@ -61,6 +146,53 @@ function Add-Result {
     }
 
     Write-Log -Message "$Name | $Status | $Details" -Level $level
+}
+
+function ConvertTo-HtmlEncoded {
+    param(
+        [AllowNull()]
+        [object]$Value
+    )
+
+    if ($null -eq $Value) {
+        return ''
+    }
+
+    return [System.Net.WebUtility]::HtmlEncode([string]$Value)
+}
+
+function Get-CategorySummary {
+    $categories = 'Platform Health', 'Prevention Validation', 'Detection & Telemetry', 'Cloud Visibility'
+
+    foreach ($category in $categories) {
+        $items = @($script:Results | Where-Object { $_.Category -eq $category })
+
+        if ($items.Count -eq 0) {
+            [PSCustomObject]@{
+                Category = $category
+                Result   = 'Not Run'
+            }
+            continue
+        }
+
+        if ($items.Status -contains 'Failed') {
+            $result = 'Failed'
+        }
+        elseif ($items.Status -contains 'Warning') {
+            $result = 'Needs Review'
+        }
+        elseif ($items.Status -contains 'Executed') {
+            $result = 'Needs Review'
+        }
+        else {
+            $result = 'Passed'
+        }
+
+        [PSCustomObject]@{
+            Category = $category
+            Result   = $result
+        }
+    }
 }
 
 function Test-DefenderService {
@@ -105,14 +237,14 @@ function Test-ASR {
         $rules = @($pref.AttackSurfaceReductionRules_Ids)
 
         if ($null -ne $rules -and $rules.Count -gt 0) {
-            Add-Result 'ASR Rules' 'Passed' "$($rules.Count) ASR rule(s) configured."
+            Add-Result 'ASR Configuration' 'Passed' "$($rules.Count) ASR rule(s) configured."
         }
         else {
-            Add-Result 'ASR Rules' 'Warning' 'No ASR rules configured on this endpoint.'
+            Add-Result 'ASR Configuration' 'Warning' 'No ASR rules configured on this endpoint.'
         }
     }
     catch {
-        Add-Result 'ASR Rules' 'Failed' $_.Exception.Message
+        Add-Result 'ASR Configuration' 'Failed' $_.Exception.Message
     }
 }
 
@@ -167,7 +299,7 @@ function Test-EDR {
     try {
         $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes('Write-Output "MDE test simulation"'))
         Start-Process -FilePath 'powershell.exe' -ArgumentList "-NoProfile -WindowStyle Hidden -EncodedCommand $encoded" -WindowStyle Hidden -ErrorAction Stop | Out-Null
-        Add-Result 'EDR Simulation' 'Executed' 'Benign encoded PowerShell executed. Validate device timeline and alerts in Defender portal.'
+        Add-Result 'EDR Simulation' 'Executed' 'Benign encoded PowerShell executed. Validate process execution, command-line visibility, and any related alerts in the Defender portal.'
     }
     catch {
         Add-Result 'EDR Simulation' 'Failed' $_.Exception.Message
@@ -264,7 +396,7 @@ function Get-MDEAlerts {
 function Export-ResultsJson {
     Initialize-MDEFramework
     $jsonPath = Join-Path $script:LogDir 'results.json'
-    $script:Results | ConvertTo-Json -Depth 4 | Set-Content -Path $jsonPath -Encoding UTF8
+    $script:Results | ConvertTo-Json -Depth 6 | Set-Content -Path $jsonPath -Encoding UTF8
     Write-Log -Message "Results exported to $jsonPath" -Level INFO
     return $jsonPath
 }
@@ -273,27 +405,79 @@ function Export-ResultsHtml {
     Initialize-MDEFramework
     $htmlPath = Join-Path $script:LogDir 'results.html'
 
-    $rows = foreach ($r in $script:Results) {
-        $statusClass = switch ($r.Status) {
-            'Passed'   { 'passed' }
-            'Warning'  { 'warning' }
-            'Failed'   { 'failed' }
-            'Executed' { 'executed' }
-            default    { 'default' }
+    $summary = $script:Results | Group-Object Status | Sort-Object Name | ForEach-Object {
+        "<li><strong>$([System.Net.WebUtility]::HtmlEncode($_.Name)):</strong> $($_.Count)</li>"
+    }
+
+    $categorySummaryRows = foreach ($item in (Get-CategorySummary)) {
+        $class = switch ($item.Result) {
+            'Passed'      { 'passed' }
+            'Failed'      { 'failed' }
+            'Needs Review'{ 'warning' }
+            default       { 'default' }
         }
 
-@"
-<tr class="$statusClass">
-    <td>$($r.TestName)</td>
-    <td>$($r.Status)</td>
-    <td>$($r.Details)</td>
-    <td>$(Get-Date $r.Time -Format 'yyyy-MM-dd HH:mm:ss')</td>
+        @"
+<tr class="$class">
+    <td>$(ConvertTo-HtmlEncoded $item.Category)</td>
+    <td>$(ConvertTo-HtmlEncoded $item.Result)</td>
 </tr>
 "@
     }
 
-    $summary = $script:Results | Group-Object Status | Sort-Object Name | ForEach-Object {
-        "<li><strong>$($_.Name):</strong> $($_.Count)</li>"
+    $categories = 'Platform Health', 'Prevention Validation', 'Detection & Telemetry', 'Cloud Visibility', 'General'
+
+    $sections = foreach ($category in $categories) {
+        $items = @($script:Results | Where-Object { $_.Category -eq $category })
+        if ($items.Count -eq 0) {
+            continue
+        }
+
+        $rows = foreach ($r in $items) {
+            $statusClass = switch ($r.Status) {
+                'Passed'   { 'passed' }
+                'Warning'  { 'warning' }
+                'Failed'   { 'failed' }
+                'Executed' { 'executed' }
+                default    { 'default' }
+            }
+
+@"
+<tr class="$statusClass">
+    <td>$(ConvertTo-HtmlEncoded $r.TestName)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.Status)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.Details)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.ExpectedBehavior)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.ExpectedTelemetry)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.AlertExpectation)</td>
+    <td>$(ConvertTo-HtmlEncoded $r.Verify)</td>
+    <td>$(Get-Date $r.Time -Format 'yyyy-MM-dd HH:mm:ss')</td>
+</tr>
+"@
+        }
+
+@"
+<div class="section">
+    <h2>$(ConvertTo-HtmlEncoded $category)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Expected Behavior</th>
+                <th>Expected Telemetry</th>
+                <th>Alert Expectation</th>
+                <th>Where to Verify</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            $($rows -join "`n")
+        </tbody>
+    </table>
+</div>
+"@
     }
 
     $html = @"
@@ -301,7 +485,7 @@ function Export-ResultsHtml {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MDE Test Framework Results</title>
+    <title>MDE Validation Framework Results</title>
     <style>
         body {
             font-family: Segoe UI, Arial, sans-serif;
@@ -309,27 +493,35 @@ function Export-ResultsHtml {
             background: #f7f7f7;
             color: #222;
         }
-        h1 {
+        h1, h2 {
             margin-bottom: 8px;
         }
-        .meta, .summary {
+        h1 {
+            color: #311640;
+        }
+        .meta, .summary, .executive {
             background: #fff;
             border: 1px solid #ddd;
             padding: 16px;
             margin-bottom: 20px;
             border-radius: 8px;
         }
+        .section {
+            margin-bottom: 28px;
+        }
         table {
             border-collapse: collapse;
             width: 100%;
             background: #fff;
             border: 1px solid #ddd;
+            table-layout: fixed;
         }
         th, td {
             text-align: left;
             padding: 10px;
             border-bottom: 1px solid #e5e5e5;
             vertical-align: top;
+            word-wrap: break-word;
         }
         th {
             background: #311640;
@@ -359,40 +551,50 @@ function Export-ResultsHtml {
             font-size: 12px;
             color: #666;
         }
+        .note {
+            font-size: 13px;
+            color: #444;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
-    <h1>MDE Test Framework Results</h1>
+    <h1>MDE Validation Framework Results</h1>
 
     <div class="meta">
         <p><strong>Generated:</strong> $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')</p>
-        <p><strong>Host:</strong> $env:COMPUTERNAME</p>
-        <p><strong>User:</strong> $env:USERNAME</p>
+        <p><strong>Host:</strong> $(ConvertTo-HtmlEncoded $env:COMPUTERNAME)</p>
+        <p><strong>User:</strong> $(ConvertTo-HtmlEncoded $env:USERNAME)</p>
+        <p><strong>Log File:</strong> $(ConvertTo-HtmlEncoded $script:LogFile)</p>
+    </div>
+
+    <div class="executive">
+        <h2>Executive Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Validation Domain</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                $($categorySummaryRows -join "`n")
+            </tbody>
+        </table>
+        <p class="note">Needs Review does not necessarily indicate failure. It typically reflects warnings, optional alert generation, or telemetry that should be confirmed by an analyst.</p>
     </div>
 
     <div class="summary">
-        <h2>Summary</h2>
+        <h2>Status Summary</h2>
         <ul>
             $($summary -join "`n")
         </ul>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Test Name</th>
-                <th>Status</th>
-                <th>Details</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            $($rows -join "`n")
-        </tbody>
-    </table>
+    $($sections -join "`n")
 
     <div class="footer">
-        Generated by MDE Test Framework
+        Generated by MDE Validation Framework
     </div>
 </body>
 </html>
@@ -430,11 +632,8 @@ function Invoke-MDETests {
         Get-MDEAlerts
     }
 
-    $jsonPath = Export-ResultsJson
-    Add-Result 'Results Export (JSON)' 'Passed' "Results written to $jsonPath"
-
-    $htmlPath = Export-ResultsHtml
-    Add-Result 'Results Export (HTML)' 'Passed' "Results written to $htmlPath"
+    $null = Export-ResultsJson
+    $null = Export-ResultsHtml
 
     return $script:Results
 }
