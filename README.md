@@ -2,6 +2,11 @@
 
 A PowerShell-based GUI tool for validating and testing Microsoft Defender for Endpoint (MDE) configurations and security controls.
 
+# 🚀 Quick Start
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+
 ---
 
 ## 🔄 How It Works
@@ -125,7 +130,3 @@ All code in this repository is provided under the terms of the included MIT Lice
 
 ---
 
-# 🚀 Quick Start
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
