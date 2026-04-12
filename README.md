@@ -3,7 +3,6 @@
 ![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?style=flat&logo=powershell&logoColor=white)
 ![Windows](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat&logo=windows&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
-![Status](https://img.shields.io/badge/Status-MVP-orange?style=flat)
 
 A PowerShell-based framework for validating the effectiveness, visibility, and behavior of Microsoft Defender for Endpoint (MDE) controls through safe, controlled simulations.
 
