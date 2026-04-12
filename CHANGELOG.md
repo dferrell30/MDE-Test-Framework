@@ -107,11 +107,18 @@ This project follows a structured release format and semantic-style versioning.
 - README.md created
 - LICENSE added
 - docs/PLAYBOOK.md added
+- - Expected outcome mapping for validation tests
+- Analyst guidance fields (Expected Behavior, Telemetry, Alert Expectation, Verification)
+- Enhanced HTML report with validation context
+- Structured test metadata mapping
 
 ### 🔧 Changed
 - Initial repository structure prepared
+- Improved HTML report readability and structure
+- Standardized test naming and output format
+- Refined validation messaging for AV, EDR, ASR, and Graph tests
 
 ### 🐛 Fixed
-- Bug fix...
+- Report export sequencing issue (ensures complete results are captured)
 
 ---
