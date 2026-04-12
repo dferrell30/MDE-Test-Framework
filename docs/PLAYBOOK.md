@@ -1,279 +1,250 @@
-# 📦 How to Install PowerShell
+# 🛡️ Defender for Endpoint Validation Playbook
 
-Option 1: Use Windows PowerShell 5.1
+## 📘 Purpose
 
-Most Windows systems already include Windows PowerShell 5.1.
+This playbook provides a structured approach to validating the effectiveness, visibility, and behavior of Microsoft Defender for Endpoint (MDE) controls using the MDE Validation Framework.
 
----
+This is not a deployment or configuration guide.
 
-### How to open it
-
-- Click Start
-- Type PowerShell
-- Click Windows PowerShell
-
-For best results:
-
-- Right-click Windows PowerShell
-- Choose Run as administrator
-- How to confirm version
-
-### Run:
-
-$PSVersionTable.PSVersion
-
-If you see 5.1.x, no additional installation is required.
-
-Option 2: Install PowerShell 7
-
-PowerShell 7 is optional, but supported.
-
-Install with Winget
-
-Run in Command Prompt or PowerShell:
-
-winget install --id Microsoft.PowerShell --source winget
-After installation
-
-Open PowerShell 7 by searching for:
-
-PowerShell 7
-
-Then verify:
-
-$PSVersionTable.PSVersion
+> This playbook is designed to help security engineers answer:
+> **“Are my endpoint security controls working as expected?”**
 
 ---
 
-📁 Repository Setup
+## 🧰 Prerequisites
 
-### After downloading or cloning the repository, your folder should look like this:
+Before running validation tests, ensure:
 
-MDE-Test-Framework/
-├── Invoke-MDEGui.ps1
-├── MDETestFramework.psm1
-├── README.md
-├── docs/
-│   └── PLAYBOOK.md
-└── logs/
-
-The logs folder can be empty. The framework will create output files automatically.
-
-### 🔐 Permissions
-Local permissions
-Permission	Needed
-Run PowerShell scripts	Yes
-Read Defender status	Yes
-Local Administrator	Recommended
-Optional Microsoft Graph permissions
-
-If using Graph validation, connect with delegated permissions such as:
-
-SecurityEvents.Read.All
-Directory.Read.All
-AuditLog.Read.All
-
-An app registration is not required for manual interactive use.
+* Microsoft Defender for Endpoint is onboarded on the target device
+* Real-time protection is enabled
+* PowerShell 5.1+ or PowerShell 7+ is available
+* Appropriate permissions exist for Microsoft Graph (if using cloud validation)
+* Testing is performed in an approved lab or enterprise environment
 
 ---
 
-## 🚀 How to Run the Application
+## 🚀 Running the Framework
 
-Step 1: Open PowerShell
+### Launch the GUI
 
-Open either:
-
-Windows PowerShell 5.1
-PowerShell 7
-
-Run as Administrator if possible.
-
-Step 2: Change to the project folder
-
-Example:
-
-cd "C:\Users\<YourUser>\Desktop\MDE-Test-Framework"
-
-Use quotes if the path contains spaces.
-
-Step 3: If needed, allow this session to run scripts
-Option A — Recommended one-time launch
-
-Run the script directly with Bypass:
-
+```powershell
 powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+```
 
-This is the simplest method.
+### Available Options
 
-Option B — Set policy for current session only
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-
-Then run:
-
-.\Invoke-MDEGui.ps1
-
-Step 4: If files were downloaded and blocked, unblock them
-
-Run:
-
-Unblock-File .\Invoke-MDEGui.ps1
-Unblock-File .\MDETestFramework.psm1
-
-Then run the application:
-
-.\Invoke-MDEGui.ps1
-
-Step 5: Use the GUI
-
-### Once the window opens:
-
-Click Connect Graph if you want cloud alert validation
-Select or clear:
-Run EICAR Test
-Run ASR Check
-Click Run Tests
-Review results in the grid
-Open logs or HTML report as needed
-🔗 Microsoft Graph Connection
-
-Graph connection is optional.
-
-Install Microsoft Graph PowerShell module
-Install-Module Microsoft.Graph -Scope CurrentUser
-Connect manually if needed
-Connect-MgGraph -Scopes "SecurityEvents.Read.All","Directory.Read.All","AuditLog.Read.All"
-Disconnect
-Disconnect-MgGraph
+| Option        | Description                                           |
+| ------------- | ----------------------------------------------------- |
+| Run Tests     | Executes all selected validation tests                |
+| Connect Graph | Authenticates to Microsoft Graph for alert validation |
+| EICAR Test    | Enables antivirus detection validation                |
+| Graph Checks  | Enables cloud alert retrieval and validation          |
 
 ---
 
+## 🧪 Validation Scenarios
 
-## 🧪 Test Scenarios
+### 🛡️ Antivirus Validation (EICAR)
 
-Defender Sensor
--
+**Purpose**
+Validates that Microsoft Defender Antivirus is actively detecting known malicious signatures.
 
-Checks whether the Sense service is running.
+**Action**
+The framework writes the EICAR test string to disk.
 
-AV Status
--
+**Expected Behavior**
 
-Checks whether Defender Antivirus and real-time protection are enabled.
+* File is immediately blocked or quarantined
 
-ASR Rules
--
+**Expected Telemetry**
 
-Checks whether Attack Surface Reduction rules are configured.
+* Malware detection event logged on the device
 
-EICAR Test
--
+**Alert Expectation**
 
-Downloads the standard EICAR test file to confirm Defender detection behavior.
+* Alert may be generated depending on policy and sensitivity
 
-EDR Simulation
--
+**Where to Verify**
 
-Launches a benign encoded PowerShell process to create telemetry for validation.
-
-Graph Module / Graph Connection / Alert Retrieval
-
-Confirms Graph module availability, sign-in status, and alert query capability.
+* Defender portal → Device timeline
+* Defender portal → Incidents & alerts
 
 ---
 
+### 🧠 EDR Telemetry Validation
 
-# 📊 Output and Reports
+**Purpose**
+Validates that endpoint activity is captured and visible for investigation.
 
-All outputs are written to:
+**Action**
+Executes a benign Base64-encoded PowerShell command.
 
-.\logs\
-Files generated
-File	Purpose
-MDE-TestLog_YYYYMMDD_HHMMSS.log	Execution log
-results.json	Structured machine-readable results
-results.html	Human-readable HTML report
-Open logs folder
-explorer .\logs
-Open HTML report
-start .\logs\results.html
-🛠️ Troubleshooting
-PowerShell says script cannot run
+**Expected Behavior**
 
-Use:
+* Command executes successfully (not typically blocked)
 
-powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+**Expected Telemetry**
 
-Or:
+* Process creation event recorded
+* Command-line activity visible
 
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-PowerShell says file is blocked
+**Alert Expectation**
 
-Run:
+* Alert may or may not trigger depending on environment configuration
 
-Unblock-File .\Invoke-MDEGui.ps1
-Unblock-File .\MDETestFramework.psm1
-Graph sign-in window does not appear
+**Where to Verify**
 
-It may open behind other windows.
-
-Try:
-
-minimizing the main app window
-using Alt+Tab
-clicking the Graph sign-in window from the taskbar
-EICAR test shows warning
-
-Possible reasons:
-
-Defender exclusions
-delayed remediation
-network/web filtering differences
-
-Check:
-
-Get-MpThreatDetection
-
-And verify in the Defender portal.
-
-ASR check shows warning
-
-This usually means no ASR rules are configured on the device.
-
-That can be normal in a lab environment.
+* Defender portal → Device timeline
+* Advanced Hunting (process events)
 
 ---
 
+### ⚙️ ASR Configuration Validation
 
-# 📂 Project Structure
+**Purpose**
+Validates that Attack Surface Reduction (ASR) rules are configured on the endpoint.
 
-MDE-Test-Framework/
-├── Invoke-MDEGui.ps1
-├── MDETestFramework.psm1
-├── README.md
-├── docs/
-│   └── PLAYBOOK.md
-├── logs/
-│   ├── results.json
-│   ├── results.html
-│   └── MDE-TestLog_*.log
-└── .gitignore
+**Action**
+Checks for presence of ASR rule configurations.
 
+**Expected Behavior**
+
+* ASR rules are present and configured (Block/Audit/Warn)
+
+**Expected Telemetry**
+
+* Configuration visible on the endpoint
+
+**Alert Expectation**
+
+* No alert expected (configuration validation only)
+
+**Where to Verify**
+
+* Endpoint configuration
+* Microsoft Intune / Defender portal
 
 ---
 
+### ☁️ Cloud Alert Validation (Graph)
 
-# ✅ Quick Launch Summary
+**Purpose**
+Validates visibility of security alerts through Microsoft Graph.
 
-If you only need the fastest path:
+**Action**
+Connects to Microsoft Graph and retrieves recent alerts.
 
-cd "C:\Path\To\MDE-Test-Framework"
-powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+**Expected Behavior**
 
-If needed:
+* Successful authentication and data retrieval
 
-Unblock-File .\Invoke-MDEGui.ps1
-Unblock-File .\MDETestFramework.psm1
+**Expected Telemetry**
 
-For the **README**, keep it shorter and link to this playbook. The README should be the landing page; the playbook should be the full operating guide.
+* Alert metadata returned from Graph API
 
-If you want, I can also generate a matching **clean README.md** that links to this exact playbook and uses the same GitHub-ready style.
+**Alert Expectation**
+
+* Existing alerts visible if present
+
+**Where to Verify**
+
+* Defender portal → Incidents & alerts
+* Microsoft Graph API output
+
+---
+
+## 🔍 How to Verify Results
+
+### Device Timeline
+
+Use the Defender portal device timeline to confirm:
+
+* Malware detection events (EICAR)
+* Process execution (EDR simulation)
+* Command-line activity
+* Security events generated during testing
+
+---
+
+### Advanced Hunting
+
+Use Advanced Hunting to validate telemetry.
+
+Example queries:
+
+```kql
+DeviceProcessEvents
+| where Timestamp > ago(30m)
+| where ProcessCommandLine contains "powershell"
+```
+
+```kql
+DeviceEvents
+| where Timestamp > ago(30m)
+| where ActionType contains "Antivirus"
+```
+
+---
+
+### Alerts & Incidents
+
+Check for:
+
+* Malware detection alerts (EICAR)
+* Suspicious activity alerts (environment dependent)
+* Incident correlation
+
+> Note: Not all tests are expected to generate alerts. Lack of alerts does not necessarily indicate failure.
+
+---
+
+## 📊 Common Outcomes & Interpretation
+
+| Scenario                                        | Meaning                                      |
+| ----------------------------------------------- | -------------------------------------------- |
+| EICAR not detected                              | Defender AV may be disabled or misconfigured |
+| EICAR detected but no alert                     | Normal depending on alert configuration      |
+| EDR simulation visible in timeline but no alert | Expected behavior in many environments       |
+| No telemetry for EDR test                       | Possible sensor or logging issue             |
+| No Graph alerts returned                        | May indicate no recent alerts, not a failure |
+
+---
+
+## ⚠️ Important Notes
+
+* This framework uses **safe and controlled simulations only**
+* No malicious payloads are used
+* Some actions may generate alerts depending on environment configuration
+* Always validate results across multiple data sources (timeline, hunting, alerts)
+
+---
+
+## 🚧 Limitations
+
+* ASR validation is currently configuration-based (behavioral testing planned)
+* Alert generation depends on environment tuning and policies
+* Graph results depend on available data and permissions
+
+---
+
+## 🛣️ Next Steps
+
+Future improvements include:
+
+* Behavioral ASR validation scenarios
+* Expected vs actual result comparison
+* Enhanced reporting with analyst guidance
+* Alert-to-test correlation
+* Expanded Advanced Hunting queries
+
+---
+
+## ⚠️ Disclaimer
+
+This playbook is intended for defensive security validation and educational use.
+
+* Do not use in unauthorized environments
+* Do not perform testing outside approved lab or enterprise environments
+* Do not attempt to simulate malicious activity beyond what is provided
+
+The author assumes no responsibility for misuse or unintended impact.
