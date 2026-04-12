@@ -6,6 +6,7 @@ A PowerShell-based GUI tool for validating and testing Microsoft Defender for En
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+```
 
 ---
 
