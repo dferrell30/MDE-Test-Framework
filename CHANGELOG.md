@@ -104,10 +104,12 @@ This project follows a structured release format and semantic-style versioning.
 - ## [v1.1] - Release 0.2
 
 ### ✨ Added
-- New feature...
+- README.md created
+- LICENSE added
+- docs/PLAYBOOK.md added
 
 ### 🔧 Changed
-- Updated...
+- Initial repository structure prepared
 
 ### 🐛 Fixed
 - Bug fix...
