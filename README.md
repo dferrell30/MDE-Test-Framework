@@ -6,6 +6,12 @@
 
 A PowerShell-based framework for validating the effectiveness, visibility, and behavior of Microsoft Defender for Endpoint (MDE) controls through safe, controlled simulations.
 
+# 🔍 “What could cause different results”
+	•	passive mode
+	•	no alerts generated
+	•	EICAR not triggering
+	•	delayed telemetry
+
 ## 📑 Table of Contents
 
 - OverviewWhat
