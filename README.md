@@ -83,6 +83,26 @@ The framework is organized into validation domains:
 - Microsoft Graph integration for alert retrieval
 - JSON + HTML reporting outputs
 - Designed for lab and enterprise validation scenarios
+
+---
+
+## 📸 Example Output
+
+### GUI Interface
+
+![MDE GUI Interface](./images/DFEU1.png)
+
+![MDE GUI Interface - Run](./images/DFEU2.png)
+
+---
+
+### Validation Report
+
+![MDE Validation Report](./images/DFEUREPORT1.png)
+
+![MDE Validation Report - Details](./images/DFEUREPORT2.png)
+
+---
   
 # 🚀 Quick Start
 
