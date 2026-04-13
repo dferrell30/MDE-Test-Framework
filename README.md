@@ -88,19 +88,15 @@ The framework is organized into validation domains:
 
 ## 📸 Example Output
 
-### GUI Interface
+### GUI
 
-![MDE GUI Interface](./images/DFEU1.png)
-
-![MDE GUI Interface - Run](./images/DFEU2.png)
-
----
+![GUI Overview](./images/gui-overview.png)
+![GUI Run](./images/gui-run.png)
 
 ### Validation Report
 
-![MDE Validation Report](./images/DFEUREPORT1.png)
-
-![MDE Validation Report - Details](./images/DFEUREPORT2.png)
+![Report Summary](./images/report-summary.png)
+![Report Details](./images/report-details.png)
 
 ---
   
