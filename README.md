@@ -107,7 +107,23 @@ git clone https://github.com/<your-username>/MDE-Test-Framework.git
 cd MDE-Test-Framework
 
 3. Launch the GUI
-powershell -ExecutionPolicy Bypass -File .\Invoke-MDEGui.ps1
+
+#This is launched from the root of the repo CD path to where you clone repo\MDE-Test-Framework\
+
+#Bypass if needed
+
+ ```Powershell
+ Set-ExecutionPolicy Bypass -Scope CurrentUser
+```
+
+#Powershell once at root
+
+```PowerShell
+.\Invoke-MDEGui.ps1
+```
+
+---
+
 
 5. Run validation tests
 - Select desired test options
