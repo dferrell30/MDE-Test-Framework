@@ -108,16 +108,14 @@ The framework is organized into validation domains:
 
 ---
   
-# 🚀 Quick Start
+## 🚀 Quick Start
 
-1. Clone the repository
-git clone https://github.com/<your-username>/MDE-Test-Framework.git
+1. Clone the repository:
+
+```powershell
+git clone https://github.com/dferrell30/MDE-Test-Framework.git
 cd MDE-Test-Framework
-
-3. Launch the GUI
-
-#This is launched from the root of the repo CD path to where you clone repo\MDE-Test-Framework\
-
+```
 #Bypass if needed
 
  ```Powershell
@@ -131,7 +129,6 @@ cd MDE-Test-Framework
 ```
 
 ---
-
 
 5. Run validation tests
 - Select desired test options
