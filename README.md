@@ -37,6 +37,16 @@ But that does not guarantee detection and response are working as expected.
 
 This framework helps validate that behavior in a controlled, safe way.
 
+---
+
+## 🎯 Who This Framework Is For
+
+- Security engineers validating Defender deployments
+- Administrators onboarding Microsoft Defender for Endpoint
+- Teams testing security controls in lab or production environments
+
+---
+
 ## 📑 Table of Contents
 
 - OverviewWhat
@@ -127,6 +137,8 @@ The framework is organized into validation domains:
   
 ## 🚀 Quick Start
 
+⚠️ Run PowerShell as Administrator for best results.
+
 1. Clone the repository:
 
 ```powershell
@@ -147,13 +159,15 @@ cd MDE-Test-Framework
 
 ---
 
-5. Run validation tests
+2. Run validation tests
 - Select desired test options
 - Connect to Microsoft Graph (optional)
 - Execute tests
 - Review results in HTML or JSON output
   
 ## 🧪 Test Categories
+
+> 🧪 Tested in a lab environment. Results may vary based on Defender configuration, onboarding state, and licensing.
 
 - Platform Health
 - Validates Defender sensor and service status
@@ -189,6 +203,11 @@ The framework generates:
 - HTML Report
 - Human-readable validation report
 - Useful for demos, audits, and validation evidence
+
+## Example Output of HTML File
+
+![Report Summary](./images/report-summary.png)
+![Report Details](./images/report-details.png)
 
 # 📁 Repository Structure
 MDE-Test-Framework/
