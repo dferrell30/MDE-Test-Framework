@@ -146,14 +146,13 @@ cd MDE-Test-Framework
 - Tests Microsoft Graph connectivity
 - Retrieves recent Defender alerts
   
-# 🔍 Expected Outcomes & Verification
+## 🔍 Expected Outcomes
 
-| Test | Expected Behavior | Detection / Telemetry | Alert Expectation | Where to Verify |
-|------|------------------|----------------------|------------------|----------------|
-| EICAR | File is blocked or quarantined by Defender AV | Malware detection event logged | Alert may be generated depending on policy | Defender portal → Device timeline / Incidents |
-| EDR Simulation | Encoded PowerShell executes successfully (not blocked in most cases) | Process creation and command-line activity recorded | Alert is environment-dependent (may not trigger) | Device timeline / Advanced Hunting |
-| ASR Configuration | ASR rules are present and configured (Block/Audit/Warn) | Configuration visible on endpoint | No alert expected (configuration check only) | Endpoint configuration / Intune / Defender portal |
-| Graph Alerts | Recent alerts retrieved successfully via API | Alert metadata returned from Graph | Existing alerts visible if present | Defender portal / Microsoft Graph API |
+| Test | Expected Result | Where to Validate |
+|------|---------------|------------------|
+| EICAR | Detected / quarantined | Device timeline / alerts |
+| PowerShell | Process logged | Device timeline |
+| Alerts | Alert generated | MDE portal / Graph |
 
 Note: Some detections depend on policy configuration, sensitivity levels, and environment tuning.
 
