@@ -18,11 +18,16 @@ This framework allows you to safely simulate activity and validate how Defender 
 
 ---
 
-# 🔍 “What could cause different results”
-	•	passive mode
-	•	no alerts generated
-	•	EICAR not triggering
-	•	delayed telemetry
+## ⚠️ If Results Don’t Match Expectations
+
+Results may vary depending on:
+
+- Defender mode (active vs passive)
+- Onboarding state
+- Licensing level
+- Telemetry delays
+
+Always validate device configuration before assuming failure.
 
 ## 🛡️ The Problem
 
