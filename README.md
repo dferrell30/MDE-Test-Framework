@@ -8,9 +8,11 @@
 
 ## 🛡️ The Problem
 
-Microsoft Defender for Endpoint can appear fully onboarded and healthy.
+Defender can show as fully healthy.
 
-That does not guarantee detection and response are working as expected.
+That does not mean it’s working.
+
+This framework helps you prove it.
 
 ## ✅ What This Framework Does
 
