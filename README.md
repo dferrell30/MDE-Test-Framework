@@ -12,6 +12,14 @@ A PowerShell-based framework for validating the effectiveness, visibility, and b
 	•	EICAR not triggering
 	•	delayed telemetry
 
+## 🛡️ The Problem
+
+Defender can appear fully onboarded and healthy.
+
+But that does not guarantee detection and response are working as expected.
+
+This framework helps validate that behavior in a controlled, safe way.
+
 ## 📑 Table of Contents
 
 - OverviewWhat
