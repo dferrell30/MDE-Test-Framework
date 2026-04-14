@@ -186,8 +186,8 @@ cd MDE-Test-Framework
   
 ## 🔍 Expected Outcomes
 
-| Test | Expected Result | Where to Validate |
-|------|---------------|------------------|
+| Test | Expected Result | Where to Validate | Why It Matters |
+|------|---------------|------------------|----------------|
 | EICAR Test | File detected or quarantined | Device timeline / alerts |
 | PowerShell Simulation | Process execution logged | Device timeline |
 | Alert Retrieval | Alerts returned via Graph | MDE Portal / API |
