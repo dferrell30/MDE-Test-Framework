@@ -183,17 +183,21 @@ cd MDE-Test-Framework
 - Cloud Visibility
 - Tests Microsoft Graph connectivity
 - Retrieves recent Defender alerts
-  
+
+---
+
 ## 🔍 Expected Outcomes
 
 | Test | Expected Result | Where to Validate | Why It Matters |
 |------|---------------|------------------|----------------|
-| EICAR Test | File detected or quarantined | Device timeline / alerts |
-| PowerShell Simulation | Process execution logged | Device timeline |
-| Alert Retrieval | Alerts returned via Graph | MDE Portal / API |
-| ASR Checks | Rules enforced or reported | Defender settings / logs |
+| EICAR Test | File detected or quarantined | Device timeline / alerts | Confirms AV detection is working |
+| PowerShell Simulation | Process execution logged | Device timeline | Validates EDR telemetry visibility |
+| Alert Retrieval | Alerts returned via Graph | MDE Portal / API | Ensures alerts are generated and accessible |
+| ASR Checks | Rules enforced or reported | Defender settings / logs | Verifies attack surface reduction coverage |
 
 Note: Some detections depend on policy configuration, sensitivity levels, and environment tuning.
+
+---
 
 📊 Reporting
 
