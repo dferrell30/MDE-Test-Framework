@@ -4,7 +4,19 @@
 ![Windows](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat&logo=windows&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-A PowerShell-based framework for validating the effectiveness, visibility, and behavior of Microsoft Defender for Endpoint (MDE) controls through safe, controlled simulations.
+---
+
+## 🛡️ The Problem
+
+Microsoft Defender for Endpoint can appear fully onboarded and healthy.
+
+That does not guarantee detection and response are working as expected.
+
+## ✅ What This Framework Does
+
+This framework allows you to safely simulate activity and validate how Defender actually behaves on an endpoint.
+
+---
 
 # 🔍 “What could cause different results”
 	•	passive mode
