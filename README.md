@@ -167,9 +167,10 @@ cd MDE-Test-Framework
 
 | Test | Expected Result | Where to Validate |
 |------|---------------|------------------|
-| EICAR | Detected / quarantined | Device timeline / alerts |
-| PowerShell | Process logged | Device timeline |
-| Alerts | Alert generated | MDE portal / Graph |
+| EICAR Test | File detected or quarantined | Device timeline / alerts |
+| PowerShell Simulation | Process execution logged | Device timeline |
+| Alert Retrieval | Alerts returned via Graph | MDE Portal / API |
+| ASR Checks | Rules enforced or reported | Defender settings / logs |
 
 Note: Some detections depend on policy configuration, sensitivity levels, and environment tuning.
 
