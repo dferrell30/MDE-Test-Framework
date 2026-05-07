@@ -16,7 +16,7 @@ This framework helps you prove it.
 
 ## ✅ What This Framework Does
 
-This framework allows you to safely simulate activity and validate how Defender actually behaves on an endpoint. Designed to be simple to run with minimal setup.
+This framework allows you to safely simulate activity and validate how Defender actually behaves on an endpoint. Designed to be simple to run with minimal setup. This script is run from the local machine that is enrolled into Defender for Endpoint.
 
 ---
 
