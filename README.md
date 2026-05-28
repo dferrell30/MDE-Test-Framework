@@ -285,4 +285,27 @@ No employer, past, present, or future, has reviewed, approved, endorsed, or is i
 
 This project was developed outside the scope of any employment and without the use of proprietary, confidential, or restricted resources.
 
-All code/language in this repository is provided under the terms of the included MIT License.
+## Licensing Update
+
+Beginning with the current Community Edition release, Shadow Suite repositories transitioned to the Business Source License 1.1 (BSL).
+
+This change was made to support:
+
+* long-term platform sustainability
+* consistent Shadow Suite ecosystem licensing
+* branding protection
+* future platform development
+* responsible community distribution
+
+Shadow Suite Community Edition remains available for:
+
+* personal use
+* research
+* educational use
+* defensive security operations
+* internal organizational evaluation
+
+Commercial redistribution, managed service integration, SaaS hosting, rebranding, or derivative commercial offerings require written authorization.
+
+Previous releases remain subject to the license terms under which they were originally published.
+
